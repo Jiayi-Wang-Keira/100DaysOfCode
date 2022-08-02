@@ -1,0 +1,100 @@
+#Setup
+from replit import clear
+word_list = ['ardvark','baboon','camel']
+lives = 6
+hangman = ['''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========
+''', '''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========
+''']
+already_guess = []
+tmp_lst = []
+
+#Choose random word
+import random
+chosen_word = random.choice(word_list)
+
+#Test code
+length = len(chosen_word)
+for i in range(length):
+    tmp_lst.append("_")
+
+end_of_game = False
+while not end_of_game:    
+    #User guess
+    guess = input("Guess a letter: ").lower()
+    clear()
+    
+    #Check letter
+    if guess in already_guess:
+        print(f"You've already guessed {guess}")
+    elif guess in chosen_word:
+        for i in range(length):
+            if chosen_word[i] == guess:
+                tmp_lst[i] = guess
+        print(" ".join(tmp_lst))
+    else:
+        lives-=1
+        print(f"You guessed {guess}, that's not in the word. You lose a life.")
+    print(hangman[lives])
+    already_guess.append(guess)
+    
+    #Output result
+    if lives == 0:
+        end_of_game = True
+        print("You lose!")
+    if "_" not in tmp_lst:
+        end_of_game = True
+        print("You win")
+
